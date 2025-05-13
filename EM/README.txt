@@ -1,0 +1,1 @@
+Compila con make y coloca BOOTX64.EFI + EMShell.bin en EFI/BOOT/
