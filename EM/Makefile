@@ -1,6 +1,6 @@
 obj-m += rootkit.o
 
-KDIR := /usr/src/linux-source-6.8.0
+KDIR := /lib/modules/$(shell uname -r)/build
 
 all:
 	make -C $(KDIR) M=$(PWD) modules
