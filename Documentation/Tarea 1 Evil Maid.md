@@ -192,7 +192,8 @@ A continuación se presenta un ejemplo del log de commits en Git utilizado para 
 ```
 git log --oneline
 
-af2063c (HEAD -> main, origin/main, origin/HEAD) Sección: Documentación del ataque
+7615849 Final delivery of all documents
+af2063c Sección: Documentación del ataque
 b434d6e Fix Makefile path for kernel headers
 f9c2bbf Documentation 0.1
 be26471 Evil Maid Rootkit 1.0
